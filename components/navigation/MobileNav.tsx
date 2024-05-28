@@ -46,7 +46,7 @@ function MobileNav() {
             {openNav ? <HiXMark size={24} /> : <HiBars3BottomLeft size={24} />}
           </div>
           <div
-            className={`absolute top-[70px] flex h-[92vh] w-full flex-col justify-between bg-background p-4 shadow-[0px_0px_10px_2px_#00000024] duration-200 dark:bg-background ${openNav ? "left-0" : "-left-[1000px]"}`}
+            className={`absolute top-[70px] flex h-[92vh] w-full flex-col bg-background p-4 shadow-[0px_0px_10px_2px_#00000024] duration-200 dark:bg-background ${openNav ? "left-0" : "-left-[1000px]"}`}
           >
             <div className="flex flex-col gap-4">
               {SidebarLinks.map((link) => (
@@ -61,7 +61,7 @@ function MobileNav() {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col items-center justify-center gap-2">
+            <div className="mt-[400px] flex flex-col items-center justify-center gap-4">
               <UserAvatar data={session} />
               <SignOutBtn />
             </div>
