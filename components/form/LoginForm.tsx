@@ -13,8 +13,8 @@ import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "testaccount@gmail.com",
+    password: "test123456",
   });
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
