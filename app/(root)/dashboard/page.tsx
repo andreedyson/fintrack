@@ -10,11 +10,11 @@ import { getAllIncome, getIncomeSum } from "@/lib/actions/income.actions";
 import { getAllExpense, getExpenseSum } from "@/lib/actions/expense.actions";
 import { getAccountSum, getUserAccount } from "@/lib/actions/account.actions";
 import { HiArrowDown, HiArrowUp, HiOutlineWallet } from "react-icons/hi2";
+import { getAccountCategory } from "@/lib/actions/category.actions";
+import HighestSpendingSelect from "@/components/action/HighestSpendingSelect";
 import { UserProvider } from "@/lib/context/UserContext";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { getAccountCategory } from "@/lib/actions/category.actions";
-import HighestSpendingSelect from "@/components/action/HighestSpendingSelect";
 
 async function DashboardPage() {
   const session: any = await getServerSession(authOptions);
