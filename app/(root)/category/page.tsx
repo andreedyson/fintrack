@@ -91,13 +91,13 @@ async function CategoryPage() {
             </h3>
 
             {/* Line Charts Insights */}
-            <div className="w-full lg:h-[600px]">
+            <div className="w-full lg:h-[680px]">
               {lineChartData.length ? (
                 <Tabs
                   className="w-full"
                   defaultValue={lineChartData[0].categoryId}
                 >
-                  <TabsList className="grid h-full  w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                  <TabsList className="grid h-full w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
                     {lineChartData.map((tab) => (
                       <TabsTrigger key={tab.categoryId} value={tab.categoryId}>
                         {tab.categoryName}
@@ -105,7 +105,7 @@ async function CategoryPage() {
                     ))}
                   </TabsList>
                   {lineChartData.map((data) => (
-                    <div key={data.id} className="mt-12 md:only:mt-8">
+                    <div key={data.id} className="mt-12 h-full md:mt-24">
                       <TabsContent
                         value={data.categoryId}
                         className="h-[300px] lg:h-full"

@@ -38,7 +38,7 @@ async function IncomePage() {
               <h3 className="border-b-2 pb-2 text-base font-bold dark:border-foreground/20 md:text-lg">
                 Insights
               </h3>
-              <div className="h-[300px] md:h-[430px]">
+              <div className="h-[300px] md:h-[480px]">
                 <TransactionLineChart transactionType="income" />
               </div>
             </div>
@@ -52,10 +52,10 @@ async function IncomePage() {
               </h3>
               <Tabs defaultValue="donut" className="w-full">
                 <TabsList className="flex w-full gap-4">
-                  <TabsTrigger value="donut" className="w-[220px]">
+                  <TabsTrigger value="donut" className="w-full lg:w-[220px]">
                     Donut Chart
                   </TabsTrigger>
-                  <TabsTrigger value="bar" className="w-[220px]">
+                  <TabsTrigger value="bar" className="w-full lg:w-[220px]">
                     Bar Chart
                   </TabsTrigger>
                 </TabsList>

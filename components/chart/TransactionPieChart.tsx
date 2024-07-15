@@ -49,7 +49,7 @@ function TransactionPieChart({ accountData }: Props) {
   return (
     <div className="h-full w-full">
       {totalBalance > 0 ? (
-        <div>
+        <div className="h-full w-full">
           <div className="relative">
             <div className="z-50 flex h-[350px] w-full items-center justify-center">
               <Pie options={chartOptions} data={chartData} />
@@ -83,7 +83,7 @@ function TransactionPieChart({ accountData }: Props) {
           </div>
         </div>
       ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+        <div className="flex w-full flex-col items-center justify-center gap-6 md:h-[430px]">
           <Image
             src={"/assets/no-pie-data.svg"}
             width={300}
