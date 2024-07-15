@@ -1,10 +1,10 @@
 import { connectToDB } from "@/lib/database";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@/lib/models/user.model";
 import Account from "@/lib/models/account.model";
 import Transfer from "@/lib/models/transfer.model";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const { userId, account_fromId, account_toId, name, date, amount } =
     await req.json();
 
@@ -96,7 +96,7 @@ export async function POST(req: any) {
   }
 }
 
-export async function PUT(req: any) {
+export async function PUT(req: NextRequest) {
   const {
     transferId,
     userId,
@@ -231,7 +231,7 @@ export async function PUT(req: any) {
   }
 }
 
-export async function DELETE(req: any) {
+export async function DELETE(req: NextRequest) {
   const { userId, transferId } = await req.json();
 
   await connectToDB();

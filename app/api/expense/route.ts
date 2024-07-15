@@ -1,11 +1,11 @@
 import { connectToDB } from "@/lib/database";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@/lib/models/user.model";
 import Account from "@/lib/models/account.model";
 import Expense from "@/lib/models/expense.model";
 import Category from "@/lib/models/category.model";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const { name, date, amount, userId, accountId, categoryId } =
     await req.json();
 
@@ -83,7 +83,7 @@ export async function POST(req: any) {
   }
 }
 
-export async function PUT(req: any) {
+export async function PUT(req: NextRequest) {
   const {
     userId,
     expenseId,
@@ -191,7 +191,7 @@ export async function PUT(req: any) {
   }
 }
 
-export async function DELETE(req: any) {
+export async function DELETE(req: NextRequest) {
   const { userId, expenseId } = await req.json();
 
   await connectToDB();
