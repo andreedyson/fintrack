@@ -23,13 +23,19 @@ async function CategoryPage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const userAccount = await getUserAccount(userId);
-  const userCategory = await getAccountCategory(userId);
-
-  const allCategories = await getCategoryAccount(userId);
-  const categoryExpenses = await getExpenseBycategory(userId);
-
-  const lineChartData = await getCategoryLinechart(userId);
+  const [
+    userAccount,
+    userCategory,
+    allCategories,
+    categoryExpenses,
+    lineChartData,
+  ] = await Promise.all([
+    getUserAccount(userId),
+    getAccountCategory(userId),
+    getCategoryAccount(userId),
+    getExpenseBycategory(userId),
+    getCategoryLinechart(userId),
+  ]);
 
   return (
     <section className="mb-6 px-4 md:px-0">

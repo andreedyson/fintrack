@@ -23,11 +23,13 @@ async function ExpensePage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const allExpenses = await getAllExpense(userId);
-  const userAccount = await getUserAccount(userId);
-  const userCategory = await getAccountCategory(userId);
-
-  const expenseAccount = await getExpenseAccount(userId);
+  const [allExpenses, userAccount, userCategory, expenseAccount] =
+    await Promise.all([
+      getAllExpense(userId),
+      getUserAccount(userId),
+      getAccountCategory(userId),
+      getExpenseAccount(userId),
+    ]);
 
   return (
     <section className="mb-6 px-4 md:px-0">
@@ -60,12 +62,12 @@ async function ExpensePage() {
                     Bar Chart
                   </TabsTrigger>
                 </TabsList>
-                <TabsContent value="donut" className="mt-4">
-                  <div className="h-full md:h-[430px]">
+                <TabsContent value="donut" className="mt- h-full4">
+                  <div className="h-full md:min-h-[430px]">
                     <TransactionPieChart accountData={expenseAccount} />
                   </div>
                 </TabsContent>
-                <TabsContent value="bar" className="mt-4">
+                <TabsContent value="bar" className="mt-4 h-full">
                   <div className="h-[320px] md:h-[430px]">
                     <BarChart accountData={expenseAccount} />
                   </div>

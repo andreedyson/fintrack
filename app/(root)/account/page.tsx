@@ -21,13 +21,21 @@ async function AccountPage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const allAcc = await getUserAccount(userId);
-  const incomeAccount = await getIncomeAccount(userId);
-  const expenseAccount = await getExpenseAccount(userId);
-  const userCategory = await getAccountCategory(userId);
-
-  const allIncomes = await getAllIncome(userId);
-  const allExpenses = await getAllExpense(userId);
+  const [
+    allAcc,
+    incomeAccount,
+    expenseAccount,
+    userCategory,
+    allIncomes,
+    allExpenses,
+  ] = await Promise.all([
+    getUserAccount(userId),
+    getIncomeAccount(userId),
+    getExpenseAccount(userId),
+    getAccountCategory(userId),
+    getAllIncome(userId),
+    getAllExpense(userId),
+  ]);
 
   return (
     <section className="mb-6 px-4 md:px-0">

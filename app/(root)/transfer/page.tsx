@@ -11,8 +11,10 @@ async function TransferPage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const userAccount = await getUserAccount(userId);
-  const allTransfers = await getAllTransfer(userId);
+  const [userAccount, allTransfers] = await Promise.all([
+    getUserAccount(userId),
+    getAllTransfer(userId),
+  ]);
 
   return (
     <section className="mb-6 px-4 md:px-0">

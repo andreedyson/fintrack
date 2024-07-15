@@ -22,10 +22,11 @@ async function IncomePage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const userAccount = await getUserAccount(userId);
-  const allIncomes = await getAllIncome(userId);
-
-  const incomeAccount = await getIncomeAccount(userId);
+  const [userAccount, allIncomes, incomeAccount] = await Promise.all([
+    getUserAccount(userId),
+    getAllIncome(userId),
+    getIncomeAccount(userId),
+  ]);
 
   return (
     <section className="mb-6 px-4 md:px-0">
