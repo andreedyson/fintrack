@@ -1,4 +1,4 @@
-import { AccountType, CategoryExpenses, CategoryType } from "@/index";
+import { AccountType, CategoryExpenses } from "@/index";
 import { connectToDB } from "../database";
 import Account from "../models/account.model";
 import Expense from "../models/expense.model";
@@ -43,7 +43,7 @@ export async function getAccountSum(userId: string) {
 
     if (user && user.account) {
       totalAccount = user.account.reduce(
-        (total: number, acc: any) => total + acc.balance,
+        (total: number, acc: AccountType) => total + acc.balance,
         0,
       );
     }

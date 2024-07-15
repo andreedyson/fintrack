@@ -20,14 +20,23 @@ async function DashboardPage() {
   const session: any = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
-  const accountSum = await getAccountSum(userId);
-  const incomeSum = await getIncomeSum(userId);
-  const expenseSum = await getExpenseSum(userId);
-
-  const allExpenses = await getAllExpense(userId);
-  const allIncomes = await getAllIncome(userId);
-  const allAcc = await getUserAccount(userId);
-  const userCategory = await getAccountCategory(userId);
+  const [
+    accountSum,
+    incomeSum,
+    expenseSum,
+    allExpenses,
+    allIncomes,
+    allAcc,
+    userCategory,
+  ] = await Promise.all([
+    getAccountSum(userId),
+    getIncomeSum(userId),
+    getExpenseSum(userId),
+    getAllExpense(userId),
+    getAllIncome(userId),
+    getUserAccount(userId),
+    getAccountCategory(userId),
+  ]);
 
   const tableData = [...allExpenses, ...allIncomes];
 
