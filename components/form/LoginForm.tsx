@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
+import { useToast } from "../ui/use-toast";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ function LoginForm() {
 
   const router = useRouter();
   const session = useSession();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -33,34 +35,28 @@ function LoginForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!formData.email.includes("@")) {
-      setError("Email is not valid");
-      return;
-    }
+    try {
+      setSubmitting(true);
 
-    if (!formData.password || formData.password.length < 8) {
-      setError("Password should be atleast 8 characters");
-      return;
-    }
+      const res = await signIn("credentials", {
+        email: formData.email.toLowerCase(),
+        password: formData.password,
+        redirect: false,
+        rememberMe,
+      });
 
-    setSubmitting(true);
-
-    const res = await signIn("credentials", {
-      email: formData.email.toLowerCase(),
-      password: formData.password,
-      redirect: false,
-      rememberMe,
-    });
-
-    if (res?.error) {
-      setError("Invalid email or password");
-      setSubmitting(false);
-    }
-
-    if (res?.status === 200) {
-      setError("");
-      router.refresh();
-      router.replace("/dashboard");
+      if (res?.status !== 200) {
+        toast({
+          description: "Invalid Account",
+          variant: "destructive",
+        });
+        setSubmitting(false);
+      } else {
+        router.refresh();
+        router.replace("/dashboard");
+      }
+    } catch (error: any) {
+      throw new Error(error);
     }
   };
 
@@ -76,6 +72,7 @@ function LoginForm() {
   return (
     <div className=" flex min-h-[700px] items-center justify-center p-4 text-black">
       <div className="flex max-w-7xl rounded-xl bg-white">
+        {/* FinTrack Illustration */}
         <div className="hidden max-w-96 flex-col justify-center gap-8 p-8 shadow-[5px_0px_10px_1px_#edf2f7] md:flex">
           <h2 className=" text-center text-4xl font-bold italic text-main-cyan">
             FinTracker
@@ -89,6 +86,8 @@ function LoginForm() {
             />
           </div>
         </div>
+
+        {/* Login Form */}
         <div className="px-12 py-8">
           <h2 className="mb-4 text-center text-4xl font-bold italic text-main-cyan md:hidden">
             FinTracker

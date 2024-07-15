@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useToast } from "../ui/use-toast";
 import { Button } from "../ui/button";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
 import Image from "next/image";
@@ -18,9 +19,9 @@ function RegisterForm() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
 
   const router = useRouter();
+  const { toast } = useToast();
   const session = useSession();
 
   useEffect(() => {
@@ -32,21 +33,6 @@ function RegisterForm() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    if (formData.name.trim().length < 4) {
-      setError("Name should be atleast 4 characters");
-      return;
-    }
-
-    if (!formData.email.includes("@")) {
-      setError("Invalid Email");
-      return;
-    }
-
-    if (formData.password.length < 8) {
-      setError("Password should be atleast 8 characters");
-      return;
-    }
 
     try {
       setSubmitting(true);
@@ -66,10 +52,16 @@ function RegisterForm() {
 
       if (!res.ok) {
         setSubmitting(false);
-        setError(msg.message);
+        toast({
+          description: msg.message,
+          variant: "destructive",
+        });
       } else {
         setSubmitting(false);
-        setError("");
+        toast({
+          description: msg.message,
+          variant: "success",
+        });
         router.push("/");
       }
     } catch (error: any) {
@@ -83,12 +75,12 @@ function RegisterForm() {
       ...prevData,
       [name]: value,
     }));
-    setError("");
   };
 
   return (
     <div className=" flex min-h-[700px] items-center justify-center p-4 text-black">
       <div className="flex max-w-7xl rounded-xl bg-white">
+        {/* FinTrack Illustration */}
         <div className="hidden max-w-96 flex-col justify-center gap-8 p-8 shadow-[5px_0px_10px_1px_#edf2f7] md:flex">
           <h2 className=" text-center text-4xl font-bold italic text-main-cyan">
             FinTracker
@@ -102,6 +94,7 @@ function RegisterForm() {
             />
           </div>
         </div>
+        {/* Register Form */}
         <div className="px-12 py-8">
           <h2 className="mb-4 text-center text-4xl font-bold italic text-main-cyan md:hidden">
             FinTracker
@@ -189,13 +182,6 @@ function RegisterForm() {
             >
               {submitting ? "Registering..." : "Register"}
             </Button>
-            {error && (
-              <div className="flex w-full justify-center">
-                <p className="mt-4 w-fit rounded-md bg-red-500/80 px-2 py-1 font-semibold text-white">
-                  {error}
-                </p>
-              </div>
-            )}
           </form>
           <div className="mt-4 text-center">
             <Link

@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 
 import User from "@/lib/models/user.model";
 import { connectToDB } from "@/lib/database";
+import { NextResponse } from "next/server";
 
 export const authOptions: any = {
   providers: [
@@ -18,6 +19,22 @@ export const authOptions: any = {
       async authorize(credentials: any) {
         await connectToDB();
         try {
+          if (!credentials.email.includes("@")) {
+            return NextResponse.json(
+              { message: "Email is not valid" },
+              { status: 400 },
+            );
+          }
+
+          if (!credentials.password || credentials.password.length < 8) {
+            return NextResponse.json(
+              {
+                message: "Password should be atleast 8 characters",
+              },
+              { status: 400 },
+            );
+          }
+
           const user = await User.findOne({ email: credentials.email }).select(
             "+password",
           );

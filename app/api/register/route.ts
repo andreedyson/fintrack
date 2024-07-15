@@ -19,15 +19,30 @@ export async function POST(req: any) {
     }
 
     if (name.trim().length < 4) {
-      return NextResponse.json({
-        message: "Name should be at least 4 characters",
-      });
+      return NextResponse.json(
+        {
+          message: "Name should be at least 4 characters",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (!email.includes("@")) {
+      return NextResponse.json(
+        {
+          message: "Invalid Email",
+        },
+        { status: 400 },
+      );
     }
 
     if (password.length < 8) {
-      return NextResponse.json({
-        message: "Password should be at least 8 characters",
-      });
+      return NextResponse.json(
+        {
+          message: "Password should be at least 8 characters",
+        },
+        { status: 400 },
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
