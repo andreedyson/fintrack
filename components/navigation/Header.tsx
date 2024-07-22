@@ -1,13 +1,19 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "../ModeToggle";
 import UserAvatar from "../card/UserAvatar";
 
-function Header() {
-  const { data: session } = useSession();
+interface Props {
+  data: {
+    name: string;
+    email: string;
+    image?: string;
+    id: string;
+  };
+}
 
+function Header({ data }: Props) {
   const pathname = usePathname();
   const pageName = pathname.split("/").join(" ");
 
@@ -17,7 +23,7 @@ function Header() {
       <div className="flex items-center gap-2">
         <ModeToggle />
         <div>
-          <UserAvatar data={session} />
+          <UserAvatar data={data} />
         </div>
       </div>
     </div>
